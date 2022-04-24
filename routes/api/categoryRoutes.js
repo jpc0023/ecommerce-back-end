@@ -5,7 +5,13 @@ router.get('/', (req, res) => {
   Category.findAll({
     include: {
       model: Product,
-      attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+      attributes: [
+          'id', 
+          'product_name', 
+          'price', 
+          'stock', 
+          'category_id'
+        ]
     }
   })
     .then(dbCatData => {
@@ -29,7 +35,13 @@ router.get('/:id', (req, res) => {
     },
     include: {
       model: Product,
-      attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+      attributes: [
+          'id', 
+          'product_name', 
+          'price', 
+          'stock', 
+          'category_id'
+        ]
     }
   })
     .then(dbCatData => {
@@ -46,15 +58,15 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-
-  Category.create({
-    category_name: req.body.category_name
-  })
-    .then(dbCatData => res.json(dbCatData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+    
+        Category.create({
+            category_name: req.body.category_name
+        })
+            .then(dbCatData => res.json(dbCatData))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
 });
 
 router.put('/:id', (req, res) => {

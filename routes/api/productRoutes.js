@@ -3,7 +3,12 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 router.get('/', (req, res) => {
   Product.findAll({
-    attributes: ['id', 'product_name', 'price', 'stock'],
+    attributes: [
+        'id', 
+        'product_name', 
+        'price', 
+        'stock'
+    ],
     include: [
       {
         model: Category,
@@ -27,7 +32,12 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['id', 'product_name', 'price', 'stock'],
+    attributes: [
+        'id', 
+        'product_name', 
+        'price',
+        'stock'
+    ],
     include: [
       {
         model: Category,
@@ -111,10 +121,11 @@ router.put('/:id', (req, res) => {
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
         ProductTag.bulkCreate(newProductTags),
       ]);
+      
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(400).json({ message: 'I do not know.' });
     });
 });
 
@@ -126,7 +137,7 @@ router.delete('/:id', (req, res) => {
   })
   .then(dbProductData => {
     if (!dbProductData) {
-      rs.status(404).json({message: 'No product found with this id'});
+      res.status(404).json({message: 'No product found with this id'});
       return;
     }
     res.json(dbProductData);
